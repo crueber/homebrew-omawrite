@@ -13,8 +13,31 @@ class Omawrite < Formula
   end
 
   depends_on "qt"
+  on_macos do
+    depends_on "librsvg" => :build
+  end
 
   def install
+    if OS.mac?
+      # Upstream wires the SVG icon into Linux icon themes only; generate an
+      # .icns so the macOS app bundle gets a Dock/Finder icon.
+      system "rsvg-convert", "-w", "1024", "-h", "1024",
+             "pkgbuild/omawrite.svg", "-o", "icon1024.png"
+      mkdir "omawrite.iconset"
+      %w[16 32 128 256 512].each do |s|
+        system "sips", "-z", s, s, "icon1024.png",
+               "--out", "omawrite.iconset/icon_#{s}x#{s}.png"
+        s2 = (s.to_i * 2).to_s
+        system "sips", "-z", s2, s2, "icon1024.png",
+               "--out", "omawrite.iconset/icon_#{s}x#{s}@2x.png"
+      end
+      system "iconutil", "-c", "icns", "omawrite.iconset",
+             "-o", "pkgbuild/omawrite.icns"
+      inreplace "omawrite.pro", "RESOURCES += src/resources.qrc",
+                "RESOURCES += src/resources.qrc\n\nmacx {\n    ICON = " \
+                "pkgbuild/omawrite.icns\n}"
+    end
+
     system "qmake", "omawrite.pro"
     system "make"
 
