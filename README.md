@@ -1,18 +1,15 @@
-# Crueber Omawrite
+# crueber/omawrite
 
-## How do I install these formulae?
+Homebrew tap for [Omawrite](https://github.com/omacom/omawrite) — a dead-simple
+Markdown writing app built with Qt Quick.
 
-`brew install crueber/omawrite/<formula>`
+## Install
 
-Or `brew tap crueber/omawrite` and then `brew install <formula>`.
-
-Or, in a `brew bundle` `Brewfile`:
-
-```ruby
-tap "crueber/omawrite"
-brew "<formula>"
+```sh
+brew tap crueber/omawrite https://github.com/crueber/homebrew-omawrite
+brew install omawrite
 ```
 
-## Documentation
-
-`brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
+Installs Omawrite 0.5.0 from source. A submission to
+[homebrew-core](https://github.com/Homebrew/homebrew-core) is open so this tap
+is only needed until the formula is accepted.
