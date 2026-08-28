@@ -7,6 +7,7 @@ Markdown writing app built with Qt Quick.
 
 ```sh
 brew tap crueber/omawrite https://github.com/crueber/homebrew-omawrite
+brew trust crueber/omawrite
 brew install omawrite
 ```
 
