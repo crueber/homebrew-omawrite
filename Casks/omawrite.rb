@@ -1,6 +1,6 @@
 cask "omawrite" do
   version "0.5.0"
-  sha256 "f64c8718fdc50c2fa51cc395cff78da61443fd5f317e56c8c8da60ac2db06d55"
+  sha256 "5633e4b8f5753f229f1a5d4c8f6504131be0c7b3249a1741219e083cd17cce0a"
 
   url "https://github.com/crueber/omawrite/releases/download/v#{version}/omawrite-#{version}-macos.zip",
       verified: "github.com/crueber/omawrite/"
