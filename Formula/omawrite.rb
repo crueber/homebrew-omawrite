@@ -12,38 +12,17 @@ class Omawrite < Formula
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
-  depends_on "qt"
-  on_macos do
-    depends_on "librsvg" => :build
-  end
+  depends_on "qtbase"
+  depends_on "qtdeclarative"
 
   def install
-    if OS.mac?
-      # Upstream wires the SVG icon into Linux icon themes only; generate an
-      # .icns so the macOS app bundle gets a Dock/Finder icon.
-      system "rsvg-convert", "-w", "1024", "-h", "1024",
-             "pkgbuild/omawrite.svg", "-o", "icon1024.png"
-      mkdir "omawrite.iconset"
-      %w[16 32 128 256 512].each do |s|
-        system "sips", "-z", s, s, "icon1024.png",
-               "--out", "omawrite.iconset/icon_#{s}x#{s}.png"
-        s2 = (s.to_i * 2).to_s
-        system "sips", "-z", s2, s2, "icon1024.png",
-               "--out", "omawrite.iconset/icon_#{s}x#{s}@2x.png"
-      end
-      system "iconutil", "-c", "icns", "omawrite.iconset",
-             "-o", "pkgbuild/omawrite.icns"
-      inreplace "omawrite.pro", "RESOURCES += src/resources.qrc",
-                "RESOURCES += src/resources.qrc\n\nmacx {\n    ICON = " \
-                "pkgbuild/omawrite.icns\n}"
-    end
-
     system "qmake", "omawrite.pro"
     system "make"
 
     if OS.mac?
-      prefix.install "omawrite.app"
-      bin.install_symlink prefix/"omawrite.app/Contents/MacOS/omawrite" => "omawrite"
+      # Source builds install the bare binary; the packaged GUI app with its
+      # bundle, icon and framework self-containment comes from the cask.
+      bin.install "omawrite.app/Contents/MacOS/omawrite"
     else
       bin.install "omawrite"
     end
@@ -51,8 +30,5 @@ class Omawrite < Formula
 
   test do
     assert_path_exists bin/"omawrite"
-    if OS.mac?
-      assert_path_exists prefix/"omawrite.app/Contents/MacOS/omawrite"
-    end
   end
 end
