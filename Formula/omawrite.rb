@@ -1,8 +1,8 @@
 class Omawrite < Formula
   desc "Dead-simple Markdown writing app built with Qt Quick"
   homepage "https://github.com/omacom/omawrite"
-  url "https://github.com/omacom/omawrite/archive/refs/tags/v0.6.0.tar.gz"
-  sha256 "498d310b0a94beba05501ed8442019ca76f1750150f3bcd809a7307b78b038bc"
+  url "https://github.com/omacom/omawrite/archive/refs/tags/v0.7.0.tar.gz"
+  sha256 "0c6b3f765352bc13cb5a31b90b18838f0831bd1e3999f885de810eaf07c8a105"
   license "MIT"
 
   head "https://github.com/omacom/omawrite.git", branch: "master"
